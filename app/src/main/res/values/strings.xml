@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Plant app</string>
+    <string name="title_home">Mis plantas</string>
+    <string name="title_diagnosis">Diagnóstico</string>
+    <string name="title_suggestions">Sugerencias</string>
+    <string name="title_profile">Profile</string>
+    <string name="empty_plant_list">No hay plantas ni espacios creados. Presione el botón de abajo para iniciar</string>
+    <string name="create_plant">Crear planta</string>
+</resources>
