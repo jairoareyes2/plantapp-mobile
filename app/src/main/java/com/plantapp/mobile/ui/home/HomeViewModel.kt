@@ -6,8 +6,14 @@ import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val _navigateToCreatePlant = MutableLiveData<Boolean>()
+    val navigateToCreatePlant: LiveData<Boolean> = _navigateToCreatePlant
+
+    fun onCreatePlantClicked() {
+        _navigateToCreatePlant.value = true
     }
-    val text: LiveData<String> = _text
+
+    fun onNavigatedToCreatePlant() {
+        _navigateToCreatePlant.value = false
+    }
 }
