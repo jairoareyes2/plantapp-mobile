@@ -8,13 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.plantapp.mobile.R
 import com.plantapp.mobile.databinding.FragmentCreatePlantBinding
+import com.plantapp.mobile.models.Plant
+import com.plantapp.mobile.ui.PlantViewModel
 
 
 class CreatePlantFragment : Fragment() {
@@ -22,6 +28,8 @@ class CreatePlantFragment : Fragment() {
     private var _binding: FragmentCreatePlantBinding? = null
 
     private val binding get() = _binding!!
+
+    private val plantViewModel: PlantViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +44,46 @@ class CreatePlantFragment : Fragment() {
 
         binding.openTimePickerBtn.setOnClickListener {
             showTimePicker()
+        }
+
+        val spinner: Spinner = binding.spacesSelector
+
+        val spinnerItems = listOf("Jardín", "Patio", "Agregar espacio +")
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spinnerItems)
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                Toast.makeText(requireContext(), "Selected: $selectedItem", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+
+        val createPlantButton: Button = root.findViewById(R.id.createPlantBtn)
+        val plantNameEditText: EditText = root.findViewById(R.id.plantNameInput)
+
+        createPlantButton.setOnClickListener {
+            val plantName = plantNameEditText.text.toString()
+            if (plantName.isEmpty()) {
+                Toast.makeText(context, "Please enter a plant name", Toast.LENGTH_SHORT).show()
+            } else {
+                val newPlant = Plant(plantName, "Space", "10:00 AM", "Mon, Wed, Fri")
+                plantViewModel.addPlant(newPlant)
+                findNavController().navigateUp()
+            }
         }
 
         return root
@@ -88,32 +136,6 @@ class CreatePlantFragment : Fragment() {
                 }
                 val message = if (isChecked) "$day seleccionado" else "$day deseleccionado"
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        val spinner: Spinner = binding.spacesSelector
-
-        val spinnerItems = listOf("Jardín", "Patio", "Agregar espacio +")
-
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spinnerItems)
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedItem = parent.getItemAtPosition(position).toString()
-                Toast.makeText(requireContext(), "Selected: $selectedItem", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
             }
         }
     }

@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/plantListRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_plant" />
+
     <TextView
         android:id="@+id/text_empty_plant_list"
         android:layout_width="match_parent"
@@ -13,9 +23,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:text="@string/empty_plant_list"
         android:textAlignment="center"
         android:textSize="20sp"
-        android:text="@string/empty_plant_list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,9 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:text="@string/create_plant"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_empty_plant_list"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintTop_toBottomOf="@+id/text_empty_plant_list" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

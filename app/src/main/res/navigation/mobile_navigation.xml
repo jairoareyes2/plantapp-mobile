@@ -36,5 +36,10 @@
     <fragment
         android:id="@+id/navigation_create_plant"
         android:name="com.plantapp.mobile.ui.create_plant.CreatePlantFragment"
-        tools:layout="@layout/fragment_create_plant" />
+        android:label="@string/create_plant"
+        tools:layout="@layout/fragment_create_plant">
+        <action
+            android:id="@+id/action_create_plant_to_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>
