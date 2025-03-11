@@ -38,7 +38,6 @@ class HomeFragment : Fragment() {
                 homeViewModel.onNavigatedToCreatePlant()
             }
         })
-
         return root
     }
 

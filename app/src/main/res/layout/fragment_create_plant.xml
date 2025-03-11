@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingHorizontal="48dp"
         tools:context=".ui.create_plant.CreatePlantFragment">
 
     <LinearLayout
@@ -16,19 +17,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editTextText2"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/plantnameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:importantForAutofill="no"
-            android:hint="@string/plant_name_input_label"
-            android:inputType="text" />
+            android:hint="@string/plant_name_input_label">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
 
         <Spinner
             android:id="@+id/spacesSelector"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
 
         <TextView
             android:id="@+id/wateringTime"
@@ -179,17 +192,19 @@
             </LinearLayout>
         </LinearLayout>
 
-        <EditText
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/commentsInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="start|top"
-            android:importantForAutofill="no"
-            android:hint="@string/comments_input_hint"
-            android:inputType="textMultiLine"
-            android:lines="3" />
+            android:hint="@string/comments_input_hint">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="3" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
