@@ -29,6 +29,13 @@ class CreatePlantFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    private lateinit var timeSelected: String
+
+    private lateinit var spaceSelected: String
+
+    private val selectedDays = mutableListOf<String>()
+
+
     private val plantViewModel: PlantViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -46,11 +53,13 @@ class CreatePlantFragment : Fragment() {
             showTimePicker()
         }
 
+        timeSelected = "00:00 AM"
+
         val spinner: Spinner = binding.spacesSelector
 
-        val spinnerItems = listOf("Jardín", "Patio", "Agregar espacio +")
+        val spaceItems = listOf("Jardín", "Patio", "Agregar espacio +")
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spinnerItems)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spaceItems)
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -63,12 +72,40 @@ class CreatePlantFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val selectedItem = parent.getItemAtPosition(position).toString()
-                Toast.makeText(requireContext(), "Selected: $selectedItem", Toast.LENGTH_SHORT)
-                    .show()
+                spaceSelected = parent.getItemAtPosition(position).toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
+
+        val daysCheckBoxes = listOf(
+            binding.mondayCheckBox,
+            binding.tuesdayCheckBox,
+            binding.wednesdayCheckBox,
+            binding.thursdayCheckBox,
+            binding.fridayCheckBox,
+            binding.saturdayCheckBox,
+            binding.sundayCheckBox
+        )
+
+        daysCheckBoxes.forEach { checkBox ->
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                val day = when (checkBox.id) {
+                    R.id.mondayCheckBox -> "L"
+                    R.id.tuesdayCheckBox -> "M"
+                    R.id.wednesdayCheckBox -> "M"
+                    R.id.thursdayCheckBox -> "J"
+                    R.id.fridayCheckBox -> "V"
+                    R.id.saturdayCheckBox -> "S"
+                    R.id.sundayCheckBox -> "D"
+                    else -> "-"
+                }
+                if (isChecked) {
+                    selectedDays.add(day)
+                } else {
+                    selectedDays.remove(day)
+                }
             }
         }
 
@@ -80,7 +117,8 @@ class CreatePlantFragment : Fragment() {
             if (plantName.isEmpty()) {
                 Toast.makeText(context, "Please enter a plant name", Toast.LENGTH_SHORT).show()
             } else {
-                val newPlant = Plant(plantName, "Space", "10:00 AM", "Mon, Wed, Fri")
+                val daysString = selectedDays.joinToString(", ")
+                val newPlant = Plant(plantName, spaceSelected, timeSelected, daysString)
                 plantViewModel.addPlant(newPlant)
                 findNavController().navigateUp()
             }
@@ -105,39 +143,19 @@ class CreatePlantFragment : Fragment() {
             .build()
 
         picker.addOnPositiveButtonClickListener {
-            val pickedHour = picker.hour
+            var pickedHour = picker.hour
             val pickedMinute = picker.minute
-            Toast.makeText(requireContext(), "Time selected: $pickedHour:$pickedMinute", Toast.LENGTH_SHORT).show()
+
+            var isPm = false
+            if (pickedHour > 12) {
+                pickedHour -= 12
+                isPm = true
+            }
+            timeSelected = String.format("%02d:%02d", pickedHour, pickedMinute).plus(if (isPm) " PM" else " AM")
         }
 
         picker.show(childFragmentManager, "tag")
 
-        val checkBoxes = listOf(
-            binding.mondayCheckBox,
-            binding.tuesdayCheckBox,
-            binding.wednesdayCheckBox,
-            binding.thursdayCheckBox,
-            binding.fridayCheckBox,
-            binding.saturdayCheckBox,
-            binding.sundayCheckBox
-        )
-
-        checkBoxes.forEach { checkBox ->
-            checkBox.setOnCheckedChangeListener { _, isChecked ->
-                val day = when (checkBox.id) {
-                    R.id.mondayCheckBox -> "Lunes"
-                    R.id.tuesdayCheckBox -> "Martes"
-                    R.id.wednesdayCheckBox -> "Miércoles"
-                    R.id.thursdayCheckBox -> "Jueves"
-                    R.id.fridayCheckBox -> "Viernes"
-                    R.id.saturdayCheckBox -> "Sábado"
-                    R.id.sundayCheckBox -> "Domingo"
-                    else -> "Desconocido"
-                }
-                val message = if (isChecked) "$day seleccionado" else "$day deseleccionado"
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     override fun onDestroyView() {
