@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="48dp"
+    android:paddingHorizontal="24dp"
         tools:context=".ui.create_plant.CreatePlantFragment">
 
     <LinearLayout
@@ -34,14 +34,25 @@
             android:layout_width="match_parent"
             android:layout_height="16dp" />
 
-        <Spinner
-            android:id="@+id/spacesSelector"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/spacesDropdownLayout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/spaces_dropdown_hint">
+
+            <AutoCompleteTextView
+                android:id="@+id/spacesDropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="16dp" />
+
 
         <TextView
             android:id="@+id/wateringTime"

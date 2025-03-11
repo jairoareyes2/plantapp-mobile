@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -55,29 +55,16 @@ class CreatePlantFragment : Fragment() {
 
         timeSelected = "00:00 AM"
 
-        val spinner: Spinner = binding.spacesSelector
+        val spaces = listOf("Jardín", "Patio", "Agregar espacio +")
+        val adapter = ArrayAdapter(requireContext(), R.layout.space_item, spaces)
+        (binding.spacesDropdownLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
-        val spaceItems = listOf("Jardín", "Patio", "Agregar espacio +")
+        spaceSelected = spaces[0]
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, spaceItems)
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
+        (binding.spacesDropdownLayout.editText as? AutoCompleteTextView)?.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
                 spaceSelected = parent.getItemAtPosition(position).toString()
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-            }
-        }
 
         val daysCheckBoxes = listOf(
             binding.mondayCheckBox,
