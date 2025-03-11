@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.plantapp.mobile.R
 import com.plantapp.mobile.databinding.FragmentHomeBinding
 import com.plantapp.mobile.ui.PlantViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
 
@@ -22,6 +24,8 @@ class HomeFragment : Fragment() {
     private lateinit var plantAdapter: PlantAdapter
     private lateinit var emptyPlantListTextView: TextView
     private lateinit var plantListRecyclerView: RecyclerView
+    private lateinit var createPlantButton: Button
+    private lateinit var createPlantFab: FloatingActionButton
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -32,8 +36,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        val view = inflater.inflate(R.layout.fragment_home, container, false)
-
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
@@ -41,6 +43,10 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         binding.createPlantBtn.setOnClickListener {
+            homeViewModel.onCreatePlantClicked()
+        }
+
+        binding.createPlantFab.setOnClickListener {
             homeViewModel.onCreatePlantClicked()
         }
 
@@ -53,6 +59,8 @@ class HomeFragment : Fragment() {
 
         emptyPlantListTextView = root.findViewById(R.id.text_empty_plant_list)
         plantListRecyclerView = root.findViewById(R.id.plantListRecyclerView)
+        createPlantButton = root.findViewById(R.id.createPlantBtn)
+        createPlantFab = root.findViewById(R.id.createPlantFab)
         plantListRecyclerView.layoutManager = LinearLayoutManager(context)
 
         plantAdapter = PlantAdapter(emptyList())
@@ -64,9 +72,13 @@ class HomeFragment : Fragment() {
             if (plantList.isEmpty()) {
                 emptyPlantListTextView.visibility = View.VISIBLE
                 plantListRecyclerView.visibility = View.GONE
+                createPlantButton.visibility = View.VISIBLE
+                createPlantFab.visibility = View.GONE
             } else {
                 emptyPlantListTextView.visibility = View.GONE
                 plantListRecyclerView.visibility = View.VISIBLE
+                createPlantButton.visibility = View.GONE
+                createPlantFab.visibility = View.VISIBLE
             }
         }
             return root

@@ -17,4 +17,5 @@
     <string name="saturday_label">S</string>
     <string name="sunday_label">D</string>
     <string name="comments_input_hint">Comentarios</string>
+    <string name="fab_description">Fab para crear una nueva planta</string>
 </resources>
