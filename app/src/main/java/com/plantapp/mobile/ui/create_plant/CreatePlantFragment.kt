@@ -11,6 +11,8 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -30,11 +32,23 @@ class CreatePlantFragment : Fragment() {
 
     private lateinit var timeSelected: String
 
-    private lateinit var spaceSelected: String
+    private lateinit var spotSelected: String
 
     private val selectedDays = mutableListOf<String>()
 
     private val plantViewModel: PlantViewModel by activityViewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigateUp()
+            }
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,15 +63,18 @@ class CreatePlantFragment : Fragment() {
 
         timeSelected = "00:00 AM"
 
-        val spaces = listOf("Espacio por defecto", "Jardín", "Patio", "Agregar espacio +")
-        val adapter = ArrayAdapter(requireContext(), R.layout.space_item, spaces)
-        (binding.spacesDropdownLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        val spots = listOf("Espacio por defecto", "Jardín", "Patio", "Agregar espacio +")
+        val adapter = ArrayAdapter(requireContext(), R.layout.spot_item, spots)
+        (binding.spotsDropdownLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
-        spaceSelected = spaces[0]
+        spotSelected = spots[0]
 
-        (binding.spacesDropdownLayout.editText as? AutoCompleteTextView)?.onItemClickListener =
+        (binding.spotsDropdownLayout.editText as? AutoCompleteTextView)?.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
-                spaceSelected = parent.getItemAtPosition(position).toString()
+                spotSelected = parent.getItemAtPosition(position).toString()
+                if (position == spots.size - 1) {
+                    findNavController().navigate(R.id.action_create_plant_to_create_spot)
+                }
             }
 
         val daysCheckBoxes = listOf(
@@ -128,7 +145,7 @@ class CreatePlantFragment : Fragment() {
 
                 val daysString = selectedDays.joinToString(", ")
 
-                val newPlant = Plant(plantName, spaceSelected, timeSelected, daysString)
+                val newPlant = Plant(plantName, spotSelected, timeSelected, daysString)
                 plantViewModel.addPlant(newPlant)
                 findNavController().navigateUp()
             }

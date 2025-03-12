@@ -19,4 +19,5 @@
     <string name="comments_input_hint">Comentarios</string>
     <string name="fab_description">Fab para crear una nueva planta</string>
     <string name="spaces_dropdown_hint">Seleccione un espacio</string>
+    <string name="create_spot">Crear espacio</string>
 </resources>

@@ -34,6 +34,12 @@
         tools:layout="@layout/fragment_profile" />
 
     <fragment
+        android:id="@+id/navigation_create_spot"
+        android:name="com.plantapp.mobile.ui.create_spot.CreateSpotFragment"
+        android:label="@string/create_spot"
+        tools:layout="@layout/fragment_create_spot"/>
+
+    <fragment
         android:id="@+id/navigation_create_plant"
         android:name="com.plantapp.mobile.ui.create_plant.CreatePlantFragment"
         android:label="@string/create_plant"
@@ -41,5 +47,8 @@
         <action
             android:id="@+id/action_create_plant_to_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_create_plant_to_create_spot"
+            app:destination="@id/navigation_create_spot" />
     </fragment>
 </navigation>
