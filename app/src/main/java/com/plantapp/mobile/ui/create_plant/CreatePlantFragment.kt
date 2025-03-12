@@ -14,10 +14,12 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.plantapp.mobile.R
 import com.plantapp.mobile.databinding.FragmentCreatePlantBinding
 import com.plantapp.mobile.models.Plant
 import com.plantapp.mobile.ui.PlantViewModel
+import java.util.Locale
 
 
 class CreatePlantFragment : Fragment() {
@@ -32,7 +34,6 @@ class CreatePlantFragment : Fragment() {
 
     private val selectedDays = mutableListOf<String>()
 
-
     private val plantViewModel: PlantViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -45,7 +46,6 @@ class CreatePlantFragment : Fragment() {
 
         _binding = FragmentCreatePlantBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
 
         timeSelected = "00:00 AM"
 
@@ -93,60 +93,46 @@ class CreatePlantFragment : Fragment() {
         val createPlantButton: Button = root.findViewById(R.id.createPlantBtn)
         val plantNameEditText: EditText = root.findViewById(R.id.plantNameInput)
 
+        val hourInput: EditText = root.findViewById(R.id.hour_input)
+        val minuteInput: EditText = root.findViewById(R.id.minute_input)
+        val toggleGroup = root.findViewById<MaterialButtonToggleGroup>(R.id.am_pm_toggle)
+
         createPlantButton.setOnClickListener {
             val plantName = plantNameEditText.text.toString()
+
+            val hour = hourInput.text.toString().toIntOrNull()
+            val minute = minuteInput.text.toString().toIntOrNull()
+            val selectedButtonId = toggleGroup.checkedButtonId
+
             if (plantName.isEmpty()) {
-                Toast.makeText(context, "Please enter a plant name", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Por favor ingrese un nombre para la planta", Toast.LENGTH_SHORT).show()
             } else {
+                if (hour != null && minute != null) {
+                    if (hour !in 0..12 || minute !in 0..59) {
+                        Toast.makeText(context, "Por favor ingrese una hora válida", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    timeSelected = String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
+                }
+
+                if (selectedButtonId == R.id.button_am) {
+                    timeSelected += " AM"
+                } else if (selectedButtonId == R.id.button_pm) {
+                    timeSelected += " PM"
+                }
+
+                if (selectedDays.isEmpty()) {
+                    Toast.makeText(context, "Por favor seleccione al menos un día de la semana", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
                 val daysString = selectedDays.joinToString(", ")
+
                 val newPlant = Plant(plantName, spaceSelected, timeSelected, daysString)
                 plantViewModel.addPlant(newPlant)
                 findNavController().navigateUp()
             }
         }
-
-//        val btnHour = findViewById<MaterialButton>(R.id.btn_hour)
-//        val btnAm = findViewById<MaterialButton>(R.id.btn_am)
-//        val btnPm = findViewById<MaterialButton>(R.id.btn_pm)
-//
-//        var selectedHour = 12
-//        var selectedAmPm = "AM"
-//
-//        // Cambiar hora al tocar
-//        btnHour.setOnClickListener {
-//            val numberPicker = NumberPicker(this).apply {
-//                minValue = 1
-//                maxValue = 12
-//                value = selectedHour
-//                setOnValueChangedListener { _, _, newVal ->
-//                    selectedHour = newVal
-//                    btnHour.text = newVal.toString()
-//                }
-//            }
-//
-//            AlertDialog.Builder(this)
-//                .setTitle("Selecciona la hora")
-//                .setView(numberPicker)
-//                .setPositiveButton("OK") { _, _ -> }
-//                .show()
-//        }
-//
-//        // Selección de AM/PM
-//        btnAm.setOnClickListener {
-//            selectedAmPm = "AM"
-//            btnAm.isChecked = true
-//            btnPm.isChecked = false
-//        }
-//
-//        btnPm.setOnClickListener {
-//            selectedAmPm = "PM"
-//            btnPm.isChecked = true
-//            btnAm.isChecked = false
-//        }
-
-//        val hourPicker = findViewById<MaterialButton>(R.id.btn_hour)
-
-
 
         return root
     }
