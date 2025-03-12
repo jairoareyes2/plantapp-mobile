@@ -5,7 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="76dp"
+    android:paddingTop="24dp"
+    android:paddingHorizontal="12dp"
+    android:background="@color/white"
     tools:context=".ui.home.HomeFragment">
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/plantListRecyclerView"
@@ -14,7 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space"
         tools:listitem="@layout/item_plant" />
 
     <TextView
@@ -32,9 +42,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/createPlantBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:text="@string/create_plant"
@@ -46,7 +56,8 @@
         android:id="@+id/createPlantFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="24dp"
         android:contentDescription="@string/fab_description"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,6 +1,5 @@
 package com.plantapp.mobile.ui.create_plant
 
-import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,8 +14,6 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import com.plantapp.mobile.R
 import com.plantapp.mobile.databinding.FragmentCreatePlantBinding
 import com.plantapp.mobile.models.Plant
@@ -49,13 +46,10 @@ class CreatePlantFragment : Fragment() {
         _binding = FragmentCreatePlantBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.openTimePickerBtn.setOnClickListener {
-            showTimePicker()
-        }
 
         timeSelected = "00:00 AM"
 
-        val spaces = listOf("Jardín", "Patio", "Agregar espacio +")
+        val spaces = listOf("Espacio por defecto", "Jardín", "Patio", "Agregar espacio +")
         val adapter = ArrayAdapter(requireContext(), R.layout.space_item, spaces)
         (binding.spacesDropdownLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
@@ -111,38 +105,50 @@ class CreatePlantFragment : Fragment() {
             }
         }
 
+//        val btnHour = findViewById<MaterialButton>(R.id.btn_hour)
+//        val btnAm = findViewById<MaterialButton>(R.id.btn_am)
+//        val btnPm = findViewById<MaterialButton>(R.id.btn_pm)
+//
+//        var selectedHour = 12
+//        var selectedAmPm = "AM"
+//
+//        // Cambiar hora al tocar
+//        btnHour.setOnClickListener {
+//            val numberPicker = NumberPicker(this).apply {
+//                minValue = 1
+//                maxValue = 12
+//                value = selectedHour
+//                setOnValueChangedListener { _, _, newVal ->
+//                    selectedHour = newVal
+//                    btnHour.text = newVal.toString()
+//                }
+//            }
+//
+//            AlertDialog.Builder(this)
+//                .setTitle("Selecciona la hora")
+//                .setView(numberPicker)
+//                .setPositiveButton("OK") { _, _ -> }
+//                .show()
+//        }
+//
+//        // Selección de AM/PM
+//        btnAm.setOnClickListener {
+//            selectedAmPm = "AM"
+//            btnAm.isChecked = true
+//            btnPm.isChecked = false
+//        }
+//
+//        btnPm.setOnClickListener {
+//            selectedAmPm = "PM"
+//            btnPm.isChecked = true
+//            btnAm.isChecked = false
+//        }
+
+//        val hourPicker = findViewById<MaterialButton>(R.id.btn_hour)
+
+
+
         return root
-    }
-
-    private fun showTimePicker() {
-        val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-
-        val picker = MaterialTimePicker.Builder()
-            .setTimeFormat(TimeFormat.CLOCK_12H)
-            .setHour(hour)
-            .setMinute(minute)
-            .setTitleText("Seleccione la hora de riego")
-            .setInputMode(MaterialTimePicker.INPUT_MODE_KEYBOARD)
-            .setNegativeButtonText("Cancelar")
-            .setPositiveButtonText("Aceptar")
-            .build()
-
-        picker.addOnPositiveButtonClickListener {
-            var pickedHour = picker.hour
-            val pickedMinute = picker.minute
-
-            var isPm = false
-            if (pickedHour > 12) {
-                pickedHour -= 12
-                isPm = true
-            }
-            timeSelected = String.format("%02d:%02d", pickedHour, pickedMinute).plus(if (isPm) " PM" else " AM")
-        }
-
-        picker.show(childFragmentManager, "tag")
-
     }
 
     override fun onDestroyView() {

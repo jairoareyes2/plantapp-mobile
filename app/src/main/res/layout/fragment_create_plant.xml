@@ -5,7 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="24dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="0dp"
+    android:background="@color/white"
         tools:context=".ui.create_plant.CreatePlantFragment">
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -17,9 +21,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="24dp" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
             android:hint="@string/plant_name_input_label">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -39,6 +48,7 @@
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/colorSurface"
             android:hint="@string/spaces_dropdown_hint">
 
             <AutoCompleteTextView
@@ -53,26 +63,17 @@
             android:layout_width="match_parent"
             android:layout_height="16dp" />
 
-
         <TextView
             android:id="@+id/wateringTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:foregroundGravity="center_vertical"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:text="@string/waterin_time_label" />
 
-        <Button
-            android:id="@+id/openTimePickerBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:text="@string/open_time_picker"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dayOfWeekLayout" />
+        <include layout="@layout/time_picker"/>
 
         <LinearLayout
             android:id="@+id/dayOfWeekLayout"
@@ -95,8 +96,10 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:background="?attr/colorSurface"
                     android:text="@string/monday_label" />
             </LinearLayout>
 
@@ -112,8 +115,10 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:background="?attr/colorSurface"
                     android:text="@string/tuesday_label" />
             </LinearLayout>
 
@@ -129,8 +134,10 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:background="?attr/colorSurface"
                     android:text="@string/wednesday_label" />
             </LinearLayout>
 
@@ -146,8 +153,10 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:background="?attr/colorSurface"
                     android:text="@string/thursday_label" />
             </LinearLayout>
 
@@ -163,8 +172,10 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:background="?attr/colorSurface"
                     android:text="@string/friday_label" />
             </LinearLayout>
 
@@ -180,8 +191,10 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:background="?attr/colorSurface"
                     android:text="@string/saturday_label" />
             </LinearLayout>
 
@@ -197,12 +210,13 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:background="?attr/colorSurface"
                     android:text="@string/sunday_label" />
             </LinearLayout>
         </LinearLayout>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/commentsInput"
@@ -214,6 +228,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
+                android:background="?attr/colorSurface"
                 android:lines="3" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -224,9 +239,9 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/createPlantBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/create_plant"
