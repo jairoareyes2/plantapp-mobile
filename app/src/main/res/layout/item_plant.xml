@@ -24,7 +24,7 @@
                 android:id="@+id/plantNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre de la Planta"
+                android:text="@string/nombre_de_la_planta"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -32,7 +32,7 @@
                 android:id="@+id/plantSpaceTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Espacio de la Planta"
+                android:text="@string/espacio_de_la_planta"
                 android:textSize="14sp" />
 
         </LinearLayout>

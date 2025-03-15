@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.plantapp.mobile.R
+import com.plantapp.mobile.ui.create_spot.SpotViewModel
 import com.plantapp.mobile.databinding.FragmentCreatePlantBinding
 import com.plantapp.mobile.models.Plant
 import com.plantapp.mobile.ui.PlantViewModel
@@ -36,6 +37,9 @@ class CreatePlantFragment : Fragment() {
 
     private val plantViewModel: PlantViewModel by activityViewModels()
 
+    private val spotViewModel: SpotViewModel by activityViewModels()
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,16 +53,20 @@ class CreatePlantFragment : Fragment() {
 
         timeSelected = "00:00 AM"
 
-        val spots = listOf("Espacio por defecto", "Jardín", "Patio", "Agregar espacio +")
-        val adapter = ArrayAdapter(requireContext(), R.layout.spot_item, spots)
+        var spots = listOf("Agregar espacio +", "Espacio por defecto", "Jardín", "Patio")
+        if ( spotViewModel.spotList.value?.size!! > 0){
+            val lastElement = spotViewModel.spotList.value?.last()?.name;
+            spots = spots + lastElement.toString()
+        }
+        var adapter = ArrayAdapter(requireContext(), R.layout.spot_item, spots)
         (binding.spotsDropdownLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
-        spotSelected = spots[0]
+        spotSelected = spots[1]
 
         (binding.spotsDropdownLayout.editText as? AutoCompleteTextView)?.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 spotSelected = parent.getItemAtPosition(position).toString()
-                if (position == spots.size - 1) {
+                if (position == 0) {
                     findNavController().navigate(R.id.action_create_plant_to_create_spot)
                 }
             }
@@ -133,10 +141,9 @@ class CreatePlantFragment : Fragment() {
 
                 val newPlant = Plant(plantName, spotSelected, timeSelected, daysString)
                 plantViewModel.addPlant(newPlant)
-                findNavController().navigateUp()
+                findNavController().navigate(R.id.action_create_plant_to_home)
             }
         }
-
         return root
     }
 

@@ -20,4 +20,24 @@
     <string name="fab_description">Fab para crear una nueva planta</string>
     <string name="spaces_dropdown_hint">Seleccione un espacio</string>
     <string name="create_spot">Crear espacio</string>
+    <string name="riego">Riego</string>
+    <string name="riego_description">Riega con menos frecuencia pero con más agua.</string>
+    <string name="riego_initial">R</string>
+    <string name="nombre_del_espacio">Nombre del espacio</string>
+    <string name="capacidad_espacio">Capacidad (m2)</string>
+    <string name="tipo_de_espacio">Tipo de espacio:</string>
+    <string name="crear_espacio">Crear espacio</string>
+    <string name="interior">Interior</string>
+    <string name="exterior">Exterior</string>
+    <string name="tipo_de_luz">Tipo de luz:</string>
+    <string name="natural">Natural</string>
+    <string name="artificial">Artificial</string>
+    <string name="mixta">Mixta</string>
+    <string name="tipo_de_aire">Tipo de aire:</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="perfil">Perfil</string>
+    <string name="text_diagnosis">Si tu planta tiene algún problema, te podemos ayudar con el diagnóstico. Solo debes tomarle una foto a tu planta</string>
+    <string name="tomar_foto">Tomar foto</string>
+    <string name="nombre_de_la_planta">Nombre de la Planta</string>
+    <string name="espacio_de_la_planta">Espacio de la Planta</string>
 </resources>

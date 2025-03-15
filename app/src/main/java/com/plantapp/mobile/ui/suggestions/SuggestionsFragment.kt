@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.plantapp.mobile.databinding.FragmentSuggestionsBinding
 
 class SuggestionsFragment : Fragment() {
-
+    private lateinit var recyclerView: RecyclerView
     private var _binding: FragmentSuggestionsBinding? = null
 
     // This property is only valid between onCreateView and
@@ -22,15 +24,19 @@ class SuggestionsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val profileViewModel =
+        val suggestionViewModel =
             ViewModelProvider(this).get(SuggestionsViewModel::class.java)
 
         _binding = FragmentSuggestionsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSuggestions
-        profileViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        recyclerView = binding.suggestionsRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        suggestionViewModel.list.observe(viewLifecycleOwner) {
+            val suggestionsAdapter = SuggestionsAdapter(it)
+            recyclerView.adapter = suggestionsAdapter
+            recyclerView.visibility = root.visibility
         }
         return root
     }

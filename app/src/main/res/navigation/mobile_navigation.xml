@@ -37,7 +37,11 @@
         android:id="@+id/navigation_create_spot"
         android:name="com.plantapp.mobile.ui.create_spot.CreateSpotFragment"
         android:label="@string/create_spot"
-        tools:layout="@layout/fragment_create_spot"/>
+        tools:layout="@layout/fragment_create_spot">
+        <action
+            android:id="@+id/action_create_spot_to_create_plant"
+            app:destination="@id/navigation_create_plant" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_create_plant"
