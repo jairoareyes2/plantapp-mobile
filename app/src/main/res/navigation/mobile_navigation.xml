@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.plantapp.mobile.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_create_plant"
+            app:destination="@id/navigation_create_plant" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_diagnosis"
@@ -28,4 +32,23 @@
         android:name="com.plantapp.mobile.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_create_spot"
+        android:name="com.plantapp.mobile.ui.create_spot.CreateSpotFragment"
+        android:label="@string/create_spot"
+        tools:layout="@layout/fragment_create_spot"/>
+
+    <fragment
+        android:id="@+id/navigation_create_plant"
+        android:name="com.plantapp.mobile.ui.create_plant.CreatePlantFragment"
+        android:label="@string/create_plant"
+        tools:layout="@layout/fragment_create_plant">
+        <action
+            android:id="@+id/action_create_plant_to_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_create_plant_to_create_spot"
+            app:destination="@id/navigation_create_spot" />
+    </fragment>
 </navigation>

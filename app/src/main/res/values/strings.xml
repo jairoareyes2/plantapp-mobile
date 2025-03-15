@@ -6,4 +6,18 @@
     <string name="title_profile">Profile</string>
     <string name="empty_plant_list">No hay plantas ni espacios creados. Presione el botón de abajo para iniciar</string>
     <string name="create_plant">Crear planta</string>
+    <string name="plant_name_input_label">Nombre de la planta</string>
+    <string name="open_time_picker">Hora de riego</string>
+    <string name="waterin_time_label">Horario de riego</string>
+    <string name="monday_label">L</string>
+    <string name="tuesday_label">M</string>
+    <string name="wednesday_label">M</string>
+    <string name="thursday_label">J</string>
+    <string name="friday_label">V</string>
+    <string name="saturday_label">S</string>
+    <string name="sunday_label">D</string>
+    <string name="comments_input_hint">Comentarios</string>
+    <string name="fab_description">Fab para crear una nueva planta</string>
+    <string name="spaces_dropdown_hint">Seleccione un espacio</string>
+    <string name="create_spot">Crear espacio</string>
 </resources>
